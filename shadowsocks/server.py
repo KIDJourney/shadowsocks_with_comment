@@ -29,7 +29,7 @@ from shadowsocks import shell, daemon, eventloop, tcprelay, udprelay, asyncdns
 
 def main():
     shell.check_python()
-
+    # check python version
     config = shell.get_config(False)
 
     daemon.daemon_exec(config)

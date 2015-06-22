@@ -129,6 +129,10 @@ def get_config(is_local):
 
     logging.basicConfig(level=logging.INFO,
                         format='%(levelname)-s: %(message)s')
+
+    # package for logging
+    # https://docs.python.org/3.5/library/logging.html
+
     if is_local:
         shortopts = 'hd:s:b:p:k:l:m:c:t:vq'
         longopts = ['help', 'fast-open', 'pid-file=', 'log-file=', 'user=',
@@ -137,9 +141,26 @@ def get_config(is_local):
         shortopts = 'hd:s:p:k:m:c:t:vq'
         longopts = ['help', 'fast-open', 'pid-file=', 'log-file=', 'workers=',
                     'forbidden-ip=', 'user=', 'version']
+
     try:
         config_path = find_config()
+        # if config.json exist :
+        #   return configpath
+        # else : return None
+
         optlist, args = getopt.getopt(sys.argv[1:], shortopts, longopts)
+        # getopt , package for parsing the command line arguments
+        # https://docs.python.org/3.5/library/getopt.html
+        # shortopts : every option that need arguments is followed by ':'
+        # eg : -d -s -b -p -k -l .... require arguments
+        # longopts : every option that need arguments is followed by '='
+        # eg : --pid-file --log-file .... require arguments
+        # optlist get [('-h', ''), ('-d', 'blabla')...('--pid-file','blabla')]
+        # args get rest arguments
+        # eg : -h -d bla --pid-file=blabla args1 args2
+        # optlist get [('-h',''),('-d','bla'),('--pid-file','blabla')]
+        # args get ['args1','args2']
+
         for key, value in optlist:
             if key == '-c':
                 config_path = value
